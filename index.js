@@ -1,5 +1,14 @@
 const request = require('request-promise')
 const cheerio = require('cheerio')
+const Pool = require('pg').pool
+
+const pool = new Pool({
+    host: 'localhost',
+    user: 'postgres',
+    database: 'testes',
+    password: 'root',
+    port: 5432,
+});
 
 const url ={
 
@@ -7,6 +16,11 @@ const url ={
     'url': ('https://acheumarquiteto.caubr.gov.br/pesquisarProfissional')
 
 }
+async function inserindo(){
+    
+}
+
+
 async function acesso(){
     const response = await request(url)
     let acessando = cheerio.load(response)
@@ -15,7 +29,8 @@ async function acesso(){
 
     acessando('tr[class="bg_barra_arquiteto"] > td').each((index, element) => {
         if (count ==7){
-            salvar no banco
+
+            
 
             count = 0
         }
