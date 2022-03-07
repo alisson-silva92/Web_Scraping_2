@@ -4,25 +4,15 @@ const sequelize = new Sequelize('testes', 'postgres', 'root',{
     host:'localhost',
     port: 5432
 })
-
-
-
 // teste de conexão do banco
 
 sequelize
 
   .authenticate()
-
   .then(() => {
-
     console.log("Connection has been established successfully.");
 
-  })
-  .catch((err) => {
-
+  })  .catch((err) => {
     console.log("Unable to connect to the database:", err);
-
   });
-
-
 module.exports = sequelize

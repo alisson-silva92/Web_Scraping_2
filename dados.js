@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const database = require('./db');
+const db = require('./db');
 
-const Dados = database.define('produto', {
+const Dados = db.define('produto', {
 
     Nome: {
         type: Sequelize.CHAR
@@ -25,20 +25,7 @@ const Dados = database.define('produto', {
         type: Sequelize.CHAR
     }
 })
+  //criar a tabela no banco
+Dados.sync();
 
 module.exports = Dados;
-
-
-
-
-
-
-
-
-// Resultado por nome    *
-// Registro CAU
-// Data início registro
-// Data fim registro
-// Situação do registro
-// Município
-// UF
