@@ -32,7 +32,6 @@ async function acesso() {
             
                 count = 0;
         } 
-
         
         if (count <= 6) {
             if (count == 0) {
@@ -66,8 +65,7 @@ async function acesso() {
             count++
         }       
         
-        if (count == 7) {
-         
+        if (count == 7) {        
 
             const novoCadastro = Dados.create(obj)
         
