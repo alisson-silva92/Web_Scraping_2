@@ -1,13 +1,14 @@
 const request = require('request-promise')
 const cheerio = require('cheerio')
 const Pool = require('pg').pool
-const Dados = require('./dados.js')
+
 const { database } = require('pg/lib/defaults')
 const { append } = require('express/lib/response')
 const { post } = require('request')
-const db = require('./db')
-app.use(bodyParser.json());
 
+const db = require('./db');
+const Dados = require('./dados.js');
+// await db.sync();
 
 const url = {
 
@@ -19,81 +20,63 @@ const url = {
 async function acesso() {
     const response = await request(url)
     let acessando = cheerio.load(response)
-    //let nome = 
-    let count = 0
-
-    acessando('tr[class="bg_barra_arquiteto"] > td').each((index, element) => {
+    let count = 0;
+    let obj = {};
+    acessando('tr[class="bg_barra_arquiteto"] > td').each( (index, element) => {
         if (count == 7) {
-       
-        //     app.post("/", async (req, res) => {
-        //         try {
-        //             const { Nome, Registro_CAU, Data_inicio_registro, Data_fim_registro, Situacao_registro, Municipio, Uf} = req.body;
-        //             const post = await post.create({
+                // const db = require('./db');
+                // const Dados = require('./dados.js');
+               //await db.sync();
 
-        //                 Nome,
-        //                 Registro_CAU,
-        //                 Data_inicio_registro,
-        //                 Data_fim_registro,
-        //                 Situacao_registro,
-        //                 Municipio,
-        //                 Uf
-        //             });
+                const novoCadastro = Dados.create(obj)
+            
+                count = 0;
+        } 
 
-        //             return res.status(200).send(post);
-        //         }catch (err) {
-        //          return res.status(400).send({ error: err});
-        //         }
-
-        //     })
-        //     count = 0
-
-
-        app.get('/', async(req, res) => {
-            return res.json({
-                erro: false,
-                dataproduto: {
-                    Dados:"Nome"
-                }
-            })
-        })
-
-        app.listen(8080, () =>{
-            console.log("teste")
-        })
-        }
-
+        
         if (count <= 6) {
             if (count == 0) {
-                let nome = acessando(element).text()
-                console.log(nome);
+                obj.Nome = acessando(element).text()
+                //console.log(Nome);
             }
             if (count == 1) {
-                let registro = acessando(element).text()
-                console.log(registro);
+                obj.Registro_CAU = acessando(element).text()
+                //console.log(registro);
             }
             if (count == 2) {
-                let Data_início_registro = acessando(element).text()
-                console.log(Data_início_registro);
+                obj.Data_inicio_registro = acessando(element).text()
+                //console.log(Data_início_registro);
             }
             if (count == 3) {
-                let Data_fim_registro = acessando(element).text()
-                console.log(Data_fim_registro);
+                obj.Data_fim_registro = acessando(element).text()
+                ///console.log(Data_fim_registro);
             }
             if (count == 4) {
-                let Situacao_registro = acessando(element).text()
-                console.log(Situacao_registro);
+                obj.Situacao_registro = acessando(element).text()
+                //console.log(Situacao_registro);
             }
             if (count == 5) {
-                let Municipio = acessando(element).text()
-                console.log(Municipio);
+                obj.Municipio = acessando(element).text()
+                //console.log(Municipio);
             }
             if (count == 6) {
-                let uf = acessando(element).text()
-                console.log(uf);
+                obj.Uf = acessando(element).text()
+                //console.log(uf);
             }
             count++
-        }
-    });
+        }       
+        
+        if (count == 7) {
+         
+
+            const novoCadastro = Dados.create(obj)
+        
+            count = 0;
+
+    } 
+    }
+    
+    );
 }
 acesso()
 
