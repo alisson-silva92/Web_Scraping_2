@@ -13,16 +13,40 @@ const Dados = require('./dados.js');
 const url = {
 
     'method': 'post',
-    'url': ('https://acheumarquiteto.caubr.gov.br/pesquisarProfissional')
+    'url': ('https://acheumarquiteto.caubr.gov.br/pesquisarProfissional'),
+   //for()
 
 }
+// i == 0
+// url_base <- "https://acheumarquiteto.caubr.gov.br/pesquisarProfissional"
+// for(i in 0 : 13304){
+//   url <- stringr::str_replace(url_base, "NUMPAG", as.character(i))
+//   print(url)
+// }
 
-async function acesso() {
-    const response = await request(url)
+async function acesso() 
+
+
+    {for (var i = 1; i < 9; i++) {
+        console.log(i);// more statements}
+
+
+
+    const options = {
+        method: 'POST',
+        url: "https://acheumarquiteto.caubr.gov.br/pesquisarProfissional?_token=cZyOATT6jdo6gz9kZQnV4zg2Qq4sqeR3h6QxY7Vg&page="+i+"&localizar_tipo=1&uf=AC",
+        
+        
+    };
+    console.log('teste');
+
+    const response = await request(options)
     let acessando = cheerio.load(response)
     let count = 0;
     let obj = {};
     acessando('tr[class="bg_barra_arquiteto"] > td').each( (index, element) => {
+
+
         if (count == 7) {
                 // const db = require('./db');
                 // const Dados = require('./dados.js');
@@ -75,6 +99,8 @@ async function acesso() {
     }
     
     );
+
+}
 }
 acesso()
 
